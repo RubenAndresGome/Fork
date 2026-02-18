@@ -114,7 +114,23 @@ impl Database {
             .await;
         }
 
+        sqlx::query(
+            "CREATE TABLE IF NOT EXISTS documents (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                collection TEXT NOT NULL,
+                filename TEXT NOT NULL,
+                content TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )"
+        )
+        .execute(&pool)
+        .await?;
+
         Ok(Database { pool })
+    }
+
+    pub fn get_pool(&self) -> SqlitePool {
+        self.pool.clone()
     }
 
     pub async fn create_conversation(&self, title: &str) -> Result<i64, sqlx::Error> {
@@ -211,6 +227,18 @@ impl Database {
 
     pub async fn delete_agent(&self, id: i64) -> Result<(), sqlx::Error> {
         sqlx::query("DELETE FROM agents WHERE id = ? AND is_built_in = 0")
+            .bind(id)
+            .execute(&self.pool)
+            .await?;
+        Ok(())
+    }
+
+    pub async fn update_agent(&self, id: i64, name: &str, description: &str, system_prompt: &str, default_model: &str) -> Result<(), sqlx::Error> {
+        sqlx::query("UPDATE agents SET name = ?, description = ?, system_prompt = ?, default_model = ? WHERE id = ? AND is_built_in = 0")
+            .bind(name)
+            .bind(description)
+            .bind(system_prompt)
+            .bind(default_model)
             .bind(id)
             .execute(&self.pool)
             .await?;

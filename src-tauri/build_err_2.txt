@@ -1,0 +1,36 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+error[E0433]: failed to resolve: could not find `security` in `core`
+  --> src\core\orchestrator.rs:83:38
+   |
+83 |                     if !crate::core::security::SecurityPolicy::is_url_allowed(url) {
+   |                                      ^^^^^^^^ could not find `security` in `core`
+
+error[E0433]: failed to resolve: could not find `security` in `core`
+  --> src\core\sandbox.rs:29:26
+   |
+29 |         if !crate::core::security::SecurityPolicy::is_image_allowed(image) {
+   |                          ^^^^^^^^ could not find `security` in `core`
+
+error[E0308]: mismatched types
+   --> src\core\orchestrator.rs:74:40
+    |
+ 74 |             stdin: Arc::new(Mutex::new(stdin)),
+    |                             ---------- ^^^^^ expected `Option<ChildStdin>`, found `ChildStdin`
+    |                             |
+    |                             arguments to this function are incorrect
+    |
+    = note: expected enum `std::option::Option<ChildStdin>`
+             found struct `ChildStdin`
+note: associated function defined here
+   --> C:\Users\IK\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\std\src\sync\poison\mutex.rs:350:18
+    |
+350 |     pub const fn new(t: T) -> Mutex<T> {
+    |                  ^^^
+help: try wrapping the expression in `Some`
+    |
+ 74 |             stdin: Arc::new(Mutex::new(Some(stdin))),
+    |                                        +++++     +
+
+Some errors have detailed explanations: E0308, E0433.
+For more information about an error, try `rustc --explain E0308`.
+error: could not compile `tauri-app` (lib) due to 3 previous errors

@@ -38,16 +38,94 @@ async function handleMessage(message) {
         } else if (action === 'navigate') {
             await page.goto(payload.url);
             console.log(JSON.stringify({ status: 'navigated', url: payload.url }));
+        } else if (action === 'chat_glm') {
+            await page.goto('https://chatglm.cn');
+            try {
+                // Selector strategies for GLM (subject to change)
+                const inputSelector = 'textarea'; // Generic fallback
+                await page.waitForSelector(inputSelector, { timeout: 15000 });
+
+                if (payload && payload.prompt) {
+                    await page.fill(inputSelector, payload.prompt);
+                    await page.keyboard.press('Enter');
+
+                    // Wait for response
+                    await page.waitForTimeout(5000); // Basic wait
+
+                    // Try to capture response
+                    const responses = await page.$$('.markdown-body'); // Common class
+                    if (responses.length > 0) {
+                        const lastResponse = await responses[responses.length - 1].innerText();
+                        console.log(JSON.stringify({ status: 'response_received', content: lastResponse }));
+                    } else {
+                        console.log(JSON.stringify({ status: 'response_received', content: "Response extraction failed (GLM)." }));
+                    }
+                } else {
+                    console.log(JSON.stringify({ status: 'glm_opened' }));
+                }
+            } catch (e) {
+                console.log(JSON.stringify({ status: 'error', error: 'GLM interaction failed', details: e.message }));
+            }
+        } else if (action === 'chat_kimi') {
+            await page.goto('https://kimi.moonshot.cn');
+            try {
+                // Selectors for Kimi
+                const inputSelector = '[contenteditable="true"]';
+                await page.waitForSelector(inputSelector, { timeout: 15000 });
+
+                if (payload && payload.prompt) {
+                    await page.click(inputSelector);
+                    await page.keyboard.type(payload.prompt);
+                    await page.keyboard.press('Enter');
+
+                    await page.waitForTimeout(5000);
+
+                    // Kimi responses
+                    const responses = await page.$$('.markdown');
+                    if (responses.length > 0) {
+                        const lastResponse = await responses[responses.length - 1].innerText();
+                        console.log(JSON.stringify({ status: 'response_received', content: lastResponse }));
+                    } else {
+                        console.log(JSON.stringify({ status: 'response_received', content: "Response extraction failed (Kimi)." }));
+                    }
+                } else {
+                    console.log(JSON.stringify({ status: 'kimi_opened' }));
+                }
+            } catch (e) {
+                console.log(JSON.stringify({ status: 'error', error: 'Kimi interaction failed', details: e.message }));
+            }
         } else if (action === 'chat_deepseek') {
             await page.goto('https://chat.deepseek.com');
-            // TODO: Implementar selectores reales
-            console.log(JSON.stringify({ status: 'deepseek_opened' }));
+            try {
+                const inputSelector = 'textarea';
+                await page.waitForSelector(inputSelector, { timeout: 15000 });
+
+                if (payload && payload.prompt) {
+                    await page.fill(inputSelector, payload.prompt);
+                    await page.keyboard.press('Enter');
+
+                    await page.waitForTimeout(5000);
+
+                    const responses = await page.$$('.ds-markdown'); // DeepSeek specific class guess
+                    if (responses.length > 0) {
+                        const lastResponse = await responses[responses.length - 1].innerText();
+                        console.log(JSON.stringify({ status: 'response_received', content: lastResponse }));
+                    } else {
+                        // Fallback attempt
+                        console.log(JSON.stringify({ status: 'response_received', content: "Response extraction failed (DeepSeek)." }));
+                    }
+                } else {
+                    console.log(JSON.stringify({ status: 'deepseek_opened' }));
+                }
+            } catch (e) {
+                console.log(JSON.stringify({ status: 'error', error: 'DeepSeek interaction failed', details: e.message }));
+            }
         } else if (action === 'chat_chatgpt') {
             await page.goto('https://chat.openai.com');
             // Esperar a que cargue el input
             try {
                 const inputSelector = '#prompt-textarea';
-                await page.waitForSelector(inputSelector, { timeout: 10000 });
+                await page.waitForSelector(inputSelector, { timeout: 15000 });
 
                 if (payload && payload.prompt) {
                     await page.fill(inputSelector, payload.prompt);

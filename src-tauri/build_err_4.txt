@@ -1,0 +1,19 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+error[E0308]: mismatched types
+    --> src\core\security.rs:34:33
+     |
+  34 |         ALLOWED_IMAGES.contains(image)
+     |                        -------- ^^^^^ expected `&&str`, found `&str`
+     |                        |
+     |                        arguments to this method are incorrect
+     |
+     = note: expected reference `&&_`
+                found reference `&_`
+note: method defined here
+    --> C:\Users\IK\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib/rustlib/src/rust\library\core\src\slice\mod.rs:2586:12
+     |
+2586 |     pub fn contains(&self, x: &T) -> bool
+     |            ^^^^^^^^
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `tauri-app` (lib) due to 1 previous error

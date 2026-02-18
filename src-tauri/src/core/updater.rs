@@ -23,8 +23,8 @@ pub async fn check_and_update_adapters(app_handle: &tauri::AppHandle) -> Result<
         fs::create_dir_all(&adapters_dir).map_err(|e| e.to_string())?;
     }
 
-    // 1. Fetch manifest (Simulated URL for now, replace with real raw gist)
-    // let manifest_url = "https://raw.githubusercontent.com/user/repo/main/updates.json";
+    // 1. Fetch manifest
+    let manifest_url = "https://raw.githubusercontent.com/user/repo/main/updates.json";
     // For manual testing/demo, we might skip the network call and just simulate logic
     // But let's write the code as if we had a URL.
     
@@ -32,7 +32,6 @@ pub async fn check_and_update_adapters(app_handle: &tauri::AppHandle) -> Result<
     // Instead we will log that we checked.
     // To make this functional in real life, uncomment the request logic.
     
-    /*
     let client = reqwest::Client::new();
     let manifest: UpdateManifest = client.get(manifest_url)
         .send().await.map_err(|e| e.to_string())?
@@ -40,13 +39,12 @@ pub async fn check_and_update_adapters(app_handle: &tauri::AppHandle) -> Result<
         
     for (name, adapter) in manifest.adapters {
         let content = client.get(&adapter.url).send().await.map_err(|e| e.to_string())?.text().await.map_err(|e| e.to_string())?;
+        if let Some(parent) = adapters_dir.join(&name).parent() {
+            fs::create_dir_all(parent).map_err(|e| e.to_string())?;
+        }
         fs::write(adapters_dir.join(name), content).map_err(|e| e.to_string())?;
     }
     return Ok(format!("Updated to version {}", manifest.version));
-    */
-
-    // Returning mock response for safety until user provides a real URL
-    Ok("Update check simulated. No remote repo configured yet.".to_string())
 }
 
 pub fn get_adapter_path(app_handle: &tauri::AppHandle, adapter_name: &str) -> PathBuf {

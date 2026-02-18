@@ -1,0 +1,14 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+warning: method `get_collections` is never used
+  --> src\core\rag.rs:65:18
+   |
+16 | impl RagManager {
+   | --------------- method in this implementation
+...
+65 |     pub async fn get_collections(&self) -> Result<Vec<String>, String> {
+   |                  ^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `tauri-app` (lib) generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.34s

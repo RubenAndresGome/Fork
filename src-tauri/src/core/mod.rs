@@ -1,6 +1,9 @@
-pub mod orchestrator;
 pub mod auth;
-pub mod openai;
-pub mod sandbox;
 pub mod local_llm;
+pub mod openai;
+pub mod orchestrator;
+pub mod rag;
+pub mod sandbox;
+pub mod security;
+pub mod telemetry;
 pub mod updater;

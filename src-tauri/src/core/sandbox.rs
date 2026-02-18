@@ -26,6 +26,10 @@ impl SandboxManager {
     }
 
     async fn run_code(&self, image: &str, cmd: &[&str]) -> Result<String, String> {
+        if !crate::core::security::SecurityPolicy::is_image_allowed(image) {
+            return Err(format!("Security Violation: Image {} is not allowed", image));
+        }
+
         // 1. Asegurar que la imagen existe (esto puede tardar la primera vez)
         // En producción deberíamos hacer pull explícito o asumir que están cacheadas.
         // Por ahora confiamos en que Docker intentará usarla o fallará si no está y la política es tal.

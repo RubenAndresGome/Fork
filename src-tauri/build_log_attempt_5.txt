@@ -1,0 +1,28 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+error[E0277]: the trait bound `ArrayBase<OwnedRepr<i64>, Dim<[usize; 2]>>: OwnedTensorArrayData<_>` is not satisfied
+   --> src\core\local_llm.rs:44:57
+    |
+ 44 |         let input_value = ort::value::Value::from_array(input_tensor).map_err(|e| e.to_string())?;
+    |                           ----------------------------- ^^^^^^^^^^^^ the trait `OwnedTensorArrayData<_>` is not implemented for `ArrayBase<OwnedRepr<i64>, Dim<[usize; 2]>>`
+    |                           |
+    |                           required by a bound introduced by this call
+    |
+help: the following other types implement trait `OwnedTensorArrayData<I>`
+   --> C:\Users\IK\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ort-2.0.0-rc.11\src\value\impl_tensor\create.rs:443:1
+    |
+443 | impl<T: Clone + 'static, D: Dimension + 'static> OwnedTensorArrayData<T> for Array<T, D> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `ndarray::ArrayBase<ndarray::data_repr::OwnedRepr<T>, D>`
+...
+554 | impl<T: Clone + 'static, D: ToShape> OwnedTensorArrayData<T> for (D, Vec<T>) {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `(D, Vec<T>)`
+...
+570 | impl<T: Clone + 'static, D: ToShape> OwnedTensorArrayData<T> for (D, Box<[T]>) {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `(D, Box<[T]>)`
+note: required by a bound in `ort::value::impl_tensor::create::<impl ort::value::Value<TensorValueType<T>>>::from_array`
+   --> C:\Users\IK\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\ort-2.0.0-rc.11\src\value\impl_tensor\create.rs:140:32
+    |
+140 |     pub fn from_array(input: impl OwnedTensorArrayData<T>) -> Result<Tensor<T>> {
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `ort::value::impl_tensor::create::<impl Value<TensorValueType<T>>>::from_array`
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `tauri-app` (lib) due to 1 previous error

@@ -1,0 +1,2 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.29s
