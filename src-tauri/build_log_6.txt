@@ -1,0 +1,60 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+warning: struct `AccountInfo` is never constructed
+ --> src\core\auth.rs:5:12
+  |
+5 | pub struct AccountInfo {
+  |            ^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+  --> src\core\auth.rs:13:12
+   |
+12 | impl AuthManager {
+   | ---------------- associated function in this implementation
+13 |     pub fn new() -> Self {
+   |            ^^^
+
+warning: field `session` is never read
+ --> src\core\local_llm.rs:7:5
+  |
+6 | pub struct LocalInferenceEngine {
+  |            -------------------- field in this struct
+7 |     session: Session,
+  |     ^^^^^^^
+
+warning: struct `UpdateManifest` is never constructed
+ --> src\core\updater.rs:7:8
+  |
+7 | struct UpdateManifest {
+  |        ^^^^^^^^^^^^^^
+
+warning: struct `AdapterUpdate` is never constructed
+  --> src\core\updater.rs:13:8
+   |
+13 | struct AdapterUpdate {
+   |        ^^^^^^^^^^^^^
+
+warning: function `get_adapter_path` is never used
+  --> src\core\updater.rs:52:8
+   |
+52 | pub fn get_adapter_path(app_handle: &tauri::AppHandle, adapter_name: &str) -> PathBuf {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: methods `create_conversation`, `add_message`, and `get_messages` are never used
+   --> src\db\mod.rs:120:18
+    |
+  9 | impl Database {
+    | ------------- methods in this implementation
+...
+120 |     pub async fn create_conversation(&self, title: &str) -> Result<i64, sqlx::Error> {
+    |                  ^^^^^^^^^^^^^^^^^^^
+...
+129 |     pub async fn add_message(&self, conversation_id: i64, role: &str, content: &str) -> Result<(), sqlx::Error> {
+    |                  ^^^^^^^^^^^
+...
+139 |     pub async fn get_messages(&self, conversation_id: i64) -> Result<Vec<(String, String)>, sqlx::Error> {
+    |                  ^^^^^^^^^^^^
+
+warning: `tauri-app` (lib) generated 7 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.54s

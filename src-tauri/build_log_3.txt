@@ -1,0 +1,109 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+warning: unused import: `std::sync::mpsc`
+ --> src\core\orchestrator.rs:6:5
+  |
+6 | use std::sync::mpsc;
+  |     ^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `tauri::Emitter`
+ --> src\core\orchestrator.rs:7:5
+  |
+7 | use tauri::Emitter;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `LogsOptions`
+ --> src\core\sandbox.rs:3:104
+  |
+3 | use bollard::query_parameters::{CreateContainerOptions, StartContainerOptions, RemoveContainerOptions, LogsOptions, WaitContainerOptions};
+  |                                                                                                        ^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src\core\sandbox.rs:7:5
+  |
+7 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ort::session::builder::SessionBuilder`
+ --> src\core\local_llm.rs:3:5
+  |
+3 | use ort::session::builder::SessionBuilder;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> src\core\local_llm.rs:6:5
+  |
+6 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::path::PathBuf`
+ --> src\db\mod.rs:3:5
+  |
+3 | use std::path::PathBuf;
+  |     ^^^^^^^^^^^^^^^^^^
+
+error[E0560]: struct `ContainerConfig` has no field named `host_config`
+  --> src\core\sandbox.rs:39:13
+   |
+39 |             host_config: Some(HostConfig {
+   |             ^^^^^^^^^^^ `ContainerConfig` does not have this field
+   |
+   = note: available fields are: `hostname`, `domainname`, `user`, `attach_stdin`, `attach_stdout` ... and 17 others
+
+error[E0063]: missing field `platform` in initializer of `CreateContainerOptions`
+  --> src\core\sandbox.rs:53:18
+   |
+53 |             Some(CreateContainerOptions{ name: container_name.clone() }),
+   |                  ^^^^^^^^^^^^^^^^^^^^^^ missing `platform`
+
+error[E0308]: mismatched types
+   --> src\core\sandbox.rs:54:13
+    |
+ 52 |         let id = self.docker.create_container(
+    |                              ---------------- arguments to this method are incorrect
+ 53 |             Some(CreateContainerOptions{ name: container_name.clone() }),
+ 54 |             config,
+    |             ^^^^^^ expected `ContainerCreateBody`, found `ContainerConfig`
+    |
+note: method defined here
+   --> C:\Users\IK\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bollard-0.20.1\src\container.rs:294:18
+    |
+294 |     pub async fn create_container(
+    |                  ^^^^^^^^^^^^^^^^
+
+warning: variable does not need to be mutable
+  --> src\core\orchestrator.rs:54:17
+   |
+54 |             let mut stdin = child.stdin.take().expect("Failed to open stdin");
+   |                 ----^^^^^
+   |                 |
+   |                 help: remove this `mut`
+   |
+   = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `stdin`
+  --> src\core\orchestrator.rs:54:17
+   |
+54 |             let mut stdin = child.stdin.take().expect("Failed to open stdin");
+   |                 ^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_stdin`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+error[E0308]: mismatched types
+  --> src\core\sandbox.rs:53:48
+   |
+53 |             Some(CreateContainerOptions{ name: container_name.clone() }),
+   |                                                ^^^^^^^^^^^^^^^^^^^^^^ expected `Option<String>`, found `String`
+   |
+   = note: expected enum `std::option::Option<std::string::String>`
+            found struct `std::string::String`
+help: try wrapping the expression in `Some`
+   |
+53 |             Some(CreateContainerOptions{ name: Some(container_name.clone()) }),
+   |                                                +++++                      +
+
+Some errors have detailed explanations: E0063, E0308, E0560.
+For more information about an error, try `rustc --explain E0063`.
+warning: `tauri-app` (lib) generated 9 warnings
+error: could not compile `tauri-app` (lib) due to 4 previous errors; 9 warnings emitted

@@ -1,0 +1,167 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+warning: unused import: `tauri::Emitter`
+ --> src\core\orchestrator.rs:7:5
+  |
+7 | use tauri::Emitter;
+  |     ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `CreateExecOptions` and `StartExecResults`
+ --> src\core\sandbox.rs:5:21
+  |
+5 | use bollard::exec::{CreateExecOptions, StartExecResults};
+  |                     ^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src\core\sandbox.rs:9:5
+  |
+9 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ort::session::builder::SessionBuilder`
+ --> src\core\local_llm.rs:3:5
+  |
+3 | use ort::session::builder::SessionBuilder;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> src\core\local_llm.rs:6:5
+  |
+6 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::path::PathBuf`
+ --> src\db\mod.rs:3:5
+  |
+3 | use std::path::PathBuf;
+  |     ^^^^^^^^^^^^^^^^^^
+
+error[E0560]: struct `bollard::config::Config` has no field named `image`
+  --> src\core\sandbox.rs:38:13
+   |
+38 |             image: Some(image),
+   |             ^^^^^ `bollard::config::Config` does not have this field
+   |
+   = note: available fields are: `id`, `version`, `created_at`, `updated_at`, `spec`
+
+error[E0560]: struct `bollard::config::Config` has no field named `cmd`
+  --> src\core\sandbox.rs:39:13
+   |
+39 |             cmd: Some(cmd.iter().map(|s| *s).collect()),
+   |             ^^^ `bollard::config::Config` does not have this field
+   |
+   = note: available fields are: `id`, `version`, `created_at`, `updated_at`, `spec`
+
+error[E0560]: struct `bollard::config::Config` has no field named `host_config`
+  --> src\core\sandbox.rs:40:13
+   |
+40 |             host_config: Some(HostConfig {
+   |             ^^^^^^^^^^^ `bollard::config::Config` does not have this field
+   |
+   = note: available fields are: `id`, `version`, `created_at`, `updated_at`, `spec`
+
+error[E0308]: mismatched types
+  --> src\core\sandbox.rs:54:48
+   |
+54 |             Some(CreateContainerOptions{ name: &container_name, platform: None }),
+   |                                                ^^^^^^^^^^^^^^^ expected `Option<String>`, found `&String`
+   |
+   = note:   expected enum `std::option::Option<std::string::String>`
+           found reference `&std::string::String`
+
+error[E0308]: mismatched types
+  --> src\core\sandbox.rs:54:75
+   |
+54 |             Some(CreateContainerOptions{ name: &container_name, platform: None }),
+   |                                                                           ^^^^ expected `String`, found `Option<_>`
+   |
+   = note: expected struct `std::string::String`
+                found enum `std::option::Option<_>`
+
+error[E0308]: mismatched types
+   --> src\core\sandbox.rs:55:13
+    |
+ 53 |         let id = self.docker.create_container(
+    |                              ---------------- arguments to this method are incorrect
+ 54 |             Some(CreateContainerOptions{ name: &container_name, platform: None }),
+ 55 |             config,
+    |             ^^^^^^ expected `ContainerCreateBody`, found `Config`
+    |
+note: method defined here
+   --> C:\Users\IK\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bollard-0.20.1\src\container.rs:294:18
+    |
+294 |     pub async fn create_container(
+    |                  ^^^^^^^^^^^^^^^^
+
+error[E0107]: struct takes 0 generic arguments but 1 generic argument was supplied
+    --> src\core\sandbox.rs:59:61
+     |
+  59 |         self.docker.start_container(&container_name, None::<StartContainerOptions<String>>)
+     |                                                             ^^^^^^^^^^^^^^^^^^^^^-------- help: remove the unnecessary generics
+     |                                                             |
+     |                                                             expected 0 generic arguments
+     |
+note: struct defined here, with 0 generic parameters
+    --> C:\Users\IK\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bollard-stubs-1.52.1-rc.29.1.3\src\query_parameters.rs:1324:12
+     |
+1324 | pub struct StartContainerOptions
+     |            ^^^^^^^^^^^^^^^^^^^^^
+
+error[E0107]: struct takes 0 generic arguments but 1 generic argument was supplied
+    --> src\core\sandbox.rs:66:47
+     |
+  66 |             None::<bollard::query_parameters::WaitContainerOptions<String>>
+     |                                               ^^^^^^^^^^^^^^^^^^^^-------- help: remove the unnecessary generics
+     |                                               |
+     |                                               expected 0 generic arguments
+     |
+note: struct defined here, with 0 generic parameters
+    --> C:\Users\IK\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bollard-stubs-1.52.1-rc.29.1.3\src\query_parameters.rs:1571:12
+     |
+1571 | pub struct WaitContainerOptions
+     |            ^^^^^^^^^^^^^^^^^^^^
+
+error[E0282]: type annotations needed
+  --> src\core\orchestrator.rs:22:24
+   |
+22 |         let (tx, rx) = mpsc::channel();
+   |                        ^^^^^^^^^^^^^ cannot infer type of the type parameter `T` declared on the function `channel`
+   |
+help: consider specifying the generic argument
+   |
+22 |         let (tx, rx) = mpsc::channel::<T>();
+   |                                     +++++
+
+error: future cannot be sent between threads safely
+   --> src\lib.rs:73:1
+    |
+ 73 | #[tauri::command]
+    | ^^^^^^^^^^^^^^^^^ future returned by `send_prompt` is not `Send`
+...
+196 |         .invoke_handler(tauri::generate_handler![greet, send_prompt, get_stats, add_account, get_accounts, delete_account, run_code, get_agents, create_agent, delete_agent, load_local_model, check_updates])
+    |                         ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- in this macro invocation
+    |
+    = help: within `impl futures_util::Future<Output = Result<std::string::String, std::string::String>>`, the trait `std::marker::Send` is not implemented for `std::sync::MutexGuard<'_, Orchestrator>`
+note: future is not `Send` as this value is used across an await
+   --> src\lib.rs:124:50
+    |
+121 |     let orchestrator = state.orchestrator.lock().unwrap();
+    |         ------------ has type `std::sync::MutexGuard<'_, Orchestrator>` which is not `Send`
+...
+124 |     let _ = state.db.increment_usage(model, 0.0).await; 
+    |                                                  ^^^^^ await occurs here, with `orchestrator` maybe used later
+note: required by a bound in `ResultFutureTag::future`
+   --> C:\Users\IK\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\tauri-2.10.2\src\ipc\command.rs:314:42
+    |
+310 |     pub async fn future<T, E, F>(self, value: F) -> Result<InvokeResponseBody, InvokeError>
+    |                  ------ required by a bound in this associated function
+...
+314 |       F: Future<Output = Result<T, E>> + Send,
+    |                                          ^^^^ required by this bound in `ResultFutureTag::future`
+    = note: this error originates in the macro `__cmd__send_prompt` which comes from the expansion of the macro `tauri::generate_handler` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+Some errors have detailed explanations: E0107, E0282, E0308, E0560.
+For more information about an error, try `rustc --explain E0107`.
+warning: `tauri-app` (lib) generated 6 warnings
+error: could not compile `tauri-app` (lib) due to 11 previous errors; 6 warnings emitted

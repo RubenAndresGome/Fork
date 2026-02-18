@@ -1,0 +1,234 @@
+    Checking tauri-app v0.1.0 (D:\WindowsProyects\Antigravity\Fork\src-tauri)
+error[E0432]: unresolved imports `bollard::container::CreateContainerOptions`, `bollard::container::StartContainerOptions`, `bollard::container::RemoveContainerOptions`
+ --> src\core\sandbox.rs:2:34
+  |
+2 | use bollard::container::{Config, CreateContainerOptions, StartContainerOptions, RemoveContainerOptions, LogOutput};
+  |                                  ^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^ no `RemoveContainerOptions` in `container`
+  |                                  |                       |
+  |                                  |                       no `StartContainerOptions` in `container`
+  |                                  no `CreateContainerOptions` in `container`
+  |
+  = help: consider importing this struct instead:
+          bollard::query_parameters::CreateContainerOptions
+  = help: consider importing this struct instead:
+          bollard::query_parameters::StartContainerOptions
+  = help: consider importing this struct instead:
+          bollard::query_parameters::RemoveContainerOptions
+
+error[E0432]: unresolved imports `ort::GraphOptimizationLevel`, `ort::Session`, `ort::SessionBuilder`
+ --> src\core\local_llm.rs:1:11
+  |
+1 | use ort::{GraphOptimizationLevel, Session, SessionBuilder};
+  |           ^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^  ^^^^^^^^^^^^^^ no `SessionBuilder` in the root
+  |           |                       |
+  |           |                       no `Session` in the root
+  |           |                       help: a similar name exists in the module (notice the capitalization): `session`
+  |           no `GraphOptimizationLevel` in the root
+  |
+  = help: consider importing this enum instead:
+          ort::session::builder::GraphOptimizationLevel
+  = help: consider importing this struct instead:
+          ort::session::Session
+  = help: consider importing this struct instead:
+          ort::session::builder::SessionBuilder
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `mpsc`
+  --> src\core\orchestrator.rs:21:24
+   |
+21 |         let (tx, rx) = mpsc::channel();
+   |                        ^^^^ use of unresolved module or unlinked crate `mpsc`
+   |
+   = help: if you wanted to use a crate named `mpsc`, use `cargo add mpsc` to add it to your `Cargo.toml`
+help: consider importing one of these modules
+   |
+ 1 + use std::sync::mpsc;
+   |
+ 1 + use tokio::sync::mpsc;
+   |
+
+error[E0425]: cannot find type `WaitContainerOptions` in module `bollard::container`
+  --> src\core\sandbox.rs:64:40
+   |
+64 |             None::<bollard::container::WaitContainerOptions<String>>
+   |                                        ^^^^^^^^^^^^^^^^^^^^ not found in `bollard::container`
+   |
+help: consider importing this struct
+   |
+ 1 + use bollard::query_parameters::WaitContainerOptions;
+   |
+help: if you import `WaitContainerOptions`, refer to it directly
+   |
+64 -             None::<bollard::container::WaitContainerOptions<String>>
+64 +             None::<WaitContainerOptions<String>>
+   |
+
+error[E0422]: cannot find struct, variant or union type `LogsOptions` in module `bollard::container`
+  --> src\core\sandbox.rs:74:38
+   |
+74 |             Some(bollard::container::LogsOptions {
+   |                                      ^^^^^^^^^^^ not found in `bollard::container`
+   |
+help: consider importing this struct
+   |
+ 1 + use bollard::query_parameters::LogsOptions;
+   |
+help: if you import `LogsOptions`, refer to it directly
+   |
+74 -             Some(bollard::container::LogsOptions {
+74 +             Some(LogsOptions {
+   |
+
+error[E0603]: struct `Config` is private
+  --> src\core\sandbox.rs:2:26
+   |
+ 2 | use bollard::container::{Config, CreateContainerOptions, StartContainerOptions, RemoveContainerOptions, LogOutput};
+   |                          ^^^^^^ private struct
+   |
+note: the struct `Config` is defined here
+  --> C:\Users\IK\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bollard-0.20.1\src\container.rs:25:5
+   |
+25 | use crate::models::*;
+   |     ^^^^^^^^^^^^^
+help: import `Config` directly
+   |
+ 2 | use bollard::container::{bollard_stubs::models::Config, CreateContainerOptions, StartContainerOptions, RemoveContainerOptions, LogOutput};
+   |                          +++++++++++++++++++++++
+
+warning: unused import: `tauri::Emitter`
+ --> src\core\orchestrator.rs:6:5
+  |
+6 | use tauri::Emitter;
+  |     ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `CreateExecOptions` and `StartExecResults`
+ --> src\core\sandbox.rs:3:21
+  |
+3 | use bollard::exec::{CreateExecOptions, StartExecResults};
+  |                     ^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::time::Duration`
+ --> src\core\sandbox.rs:7:5
+  |
+7 | use std::time::Duration;
+  |     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::sync::Arc`
+ --> src\core\local_llm.rs:4:5
+  |
+4 | use std::sync::Arc;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused import: `std::path::PathBuf`
+ --> src\db\mod.rs:3:5
+  |
+3 | use std::path::PathBuf;
+  |     ^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `path` found for reference `&AppHandle` in the current scope
+  --> src\core\updater.rs:18:30
+   |
+18 |     let app_dir = app_handle.path().app_data_dir().map_err(|e| e.to_string())?;
+   |                              ^^^^ method not found in `&AppHandle`
+   |
+   = help: items from traits can only be used if the trait is in scope
+help: trait `Manager` which provides `path` is implemented but not in scope; perhaps you want to import it
+   |
+ 1 + use tauri::Manager;
+   |
+
+error[E0282]: type annotations needed
+  --> src\core\updater.rs:18:61
+   |
+18 |     let app_dir = app_handle.path().app_data_dir().map_err(|e| e.to_string())?;
+   |                                                             ^  - type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+18 |     let app_dir = app_handle.path().app_data_dir().map_err(|e: /* Type */| e.to_string())?;
+   |                                                              ++++++++++++
+
+error[E0599]: no method named `delete_password` found for struct `keyring::Entry` in the current scope
+  --> src\core\auth.rs:30:15
+   |
+30 |         entry.delete_password().map_err(|e| e.to_string())
+   |               ^^^^^^^^^^^^^^^
+   |
+help: there is a method `get_password` with a similar name
+   |
+30 -         entry.delete_password().map_err(|e| e.to_string())
+30 +         entry.get_password().map_err(|e| e.to_string())
+   |
+
+error[E0282]: type annotations needed
+  --> src\core\auth.rs:30:42
+   |
+30 |         entry.delete_password().map_err(|e| e.to_string())
+   |                                          ^  - type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+30 |         entry.delete_password().map_err(|e: /* Type */| e.to_string())
+   |                                           ++++++++++++
+
+error[E0282]: type annotations needed
+  --> src\core\local_llm.rs:17:23
+   |
+17 |             .map_err(|e| e.to_string())?
+   |                       ^  - type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+17 |             .map_err(|e: /* Type */| e.to_string())?
+   |                        ++++++++++++
+
+error[E0282]: type annotations needed
+  --> src\core\local_llm.rs:19:23
+   |
+19 |             .map_err(|e| e.to_string())?
+   |                       ^  - type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+19 |             .map_err(|e: /* Type */| e.to_string())?
+   |                        ++++++++++++
+
+error[E0282]: type annotations needed
+  --> src\core\local_llm.rs:21:23
+   |
+21 |             .map_err(|e| e.to_string())?
+   |                       ^  - type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+21 |             .map_err(|e: /* Type */| e.to_string())?
+   |                        ++++++++++++
+
+error[E0282]: type annotations needed
+  --> src\core\local_llm.rs:23:23
+   |
+23 |             .map_err(|e| e.to_string())?;
+   |                       ^  - type must be known at this point
+   |
+help: consider giving this closure parameter an explicit type
+   |
+23 |             .map_err(|e: /* Type */| e.to_string())?;
+   |                        ++++++++++++
+
+error[E0599]: no method named `path` found for reference `&AppHandle` in the current scope
+  --> src\core\updater.rs:52:30
+   |
+52 |     let app_dir = app_handle.path().app_data_dir().unwrap_or(PathBuf::from("."));
+   |                              ^^^^ method not found in `&AppHandle`
+   |
+   = help: items from traits can only be used if the trait is in scope
+help: trait `Manager` which provides `path` is implemented but not in scope; perhaps you want to import it
+   |
+ 1 + use tauri::Manager;
+   |
+
+Some errors have detailed explanations: E0282, E0422, E0425, E0432, E0433, E0599, E0603.
+For more information about an error, try `rustc --explain E0282`.
+warning: `tauri-app` (lib) generated 5 warnings
+error: could not compile `tauri-app` (lib) due to 15 previous errors; 5 warnings emitted
