@@ -457,3 +457,88 @@ Run npm run preview to preview your production build locally.
    Compiling webview2-com v0.38.2
    Compiling tokenizers v0.22.2
    Compiling ort v2.0.0-rc.11
+   Compiling sqlx v0.8.6
+   Compiling bollard v0.20.1
+   Compiling rustls-webpki v0.103.9
+   Compiling tokio-rustls v0.26.4
+   Compiling rustls-platform-verifier v0.6.2
+   Compiling hyper-rustls v0.27.7
+   Compiling reqwest v0.13.2
+warning: struct `AccountInfo` is never constructed
+ --> src\core\auth.rs:5:12
+  |
+5 | pub struct AccountInfo {
+  |            ^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: associated function `new` is never used
+  --> src\core\auth.rs:13:12
+   |
+12 | impl AuthManager {
+   | ---------------- associated function in this implementation
+13 |     pub fn new() -> Self {
+   |            ^^^
+
+warning: field `session` is never read
+ --> src\core\local_llm.rs:7:5
+  |
+6 | pub struct LocalInferenceEngine {
+  |            -------------------- field in this struct
+7 |     session: Session,
+  |     ^^^^^^^
+
+warning: struct `UpdateManifest` is never constructed
+ --> src\core\updater.rs:7:8
+  |
+7 | struct UpdateManifest {
+  |        ^^^^^^^^^^^^^^
+
+warning: struct `AdapterUpdate` is never constructed
+  --> src\core\updater.rs:13:8
+   |
+13 | struct AdapterUpdate {
+   |        ^^^^^^^^^^^^^
+
+warning: function `get_adapter_path` is never used
+  --> src\core\updater.rs:52:8
+   |
+52 | pub fn get_adapter_path(app_handle: &tauri::AppHandle, adapter_name: &str) -> PathBuf {
+   |        ^^^^^^^^^^^^^^^^
+
+warning: methods `create_conversation`, `add_message`, and `get_messages` are never used
+   --> src\db\mod.rs:120:18
+    |
+  9 | impl Database {
+    | ------------- methods in this implementation
+...
+120 |     pub async fn create_conversation(&self, title: &str) -> Result<i64, sqlx::Error> {
+    |                  ^^^^^^^^^^^^^^^^^^^
+...
+129 |     pub async fn add_message(&self, conversation_id: i64, role: &str, content: &str) -> Result<(), sqlx::Error> {
+    |                  ^^^^^^^^^^^
+...
+139 |     pub async fn get_messages(&self, conversation_id: i64) -> Result<Vec<(String, String)>, sqlx::Error> {
+    |                  ^^^^^^^^^^^^
+
+error: linking with `link.exe` failed: exit code: 1120
+  |
+  = note: "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.50.35717\\bin\\HostX64\\x64\\link.exe" "/DEF:C:\\Users\\IK\\AppData\\Local\\Temp\\rustcdxEM7u\\lib.def" "/NOLOGO" "C:\\Users\\IK\\AppData\\Local\\Temp\\rustcdxEM7u\\symbols.o" "<17 object files omitted>" "D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\deps/{libtauri_plugin_opener-97c8f28d199eb2f2,libopen-c6c72b72c4aa9ba2,libsqlx-f26339079352bd99,libsqlx_sqlite-f922fb18ab3b4c57,libfutures_executor-092229932aed3e14,libflume-5c60f4103b960fca,libspin-6525488dfea96488,libfutures_intrusive-6ca87424126ee1ef,liblibsqlite3_sys-e4250eaf9d0b72e8,libatoi-9cd730428d79edf1,libsqlx_core-44fd80cd89164bc4,libsha2-36f51ffe3550d525,libcpufeatures-460efc2d5de779f5,libdigest-d4d080edd09e7a4d,libblock_buffer-9b0b88721cff967b,libcrypto_common-5f202de0da49e03b,libgeneric_array-5e4b94abc0eb765f,libtypenum-e914acb62bb03e70,libhashlink-efe6ed589e136d1a,libhashbrown-1944670efa5e0bd8,libfoldhash-ae168b8864012d61,liballocator_api2-5341ea16da84fe1f,libcrossbeam_queue-bdbf520f3fc3e2fe,libevent_listener-a5ab57edfb78b7c1,libparking-d9901c0e8eada1ec,libtauri-298316124a70a55b,libdirs-7fddab30057f03aa,libdirs_sys-d3a4252c4e6f860a,liboption_ext-949334b9037d191e,libwindow_vibrancy-f033609214de6a81,libwindows_sys-d189f902393ae063,libwindows_targets-0b7bbf8d6118945b,libtauri_runtime_wry-22957b88e5c0aeb8,libsoftbuffer-6430120de65fdb82,libwry-1e7d31ac59eb12e6,libtao-c98336c10f0a0f74,libwindows_version-d4378a91e7103671,liblazy_static-abc8ad3195e0b1ee,libmuda-582afe600fcd2d00,libkeyboard_types-40bdb9ba3a59feed,libcrossbeam_channel-9f4fed36ccf499e6,libtauri_runtime-b10c4eb620906986,libwebview2_com-7f7d2bd553b667e5,libwebview2_com_sys-b4e62463ba166f60,libcookie-ccfa371975498b6a,libtime-09c2d9882e2cc11b,libtime_core-59946e4f7da86bd2,libnum_conv-a3a59c480ba1fd37,libderanged-2b529cd882c70e21,libpowerfmt-802efad82b7cbc02,libwindows-7b70876bf2809ee7,libwindows_core-8e8a62750000c2a7,libwindows_strings-248ad52e2e1048a3,libwindows_result-c5c48f042e6a4777,libwindows_link-4fb2648ab76d0d6a,libdpi-25ac0f22353df988,libserialize_to_javascript-40ff529534e0b109,libraw_window_handle-b56281a694f497d0,libtauri_utils-ae7c7efb114bef56,libdunce-ca02350aef89eee4,libinfer-21c1f6a95cb02635,libcfb-6a16d398c39c68cc,libbyteorder-c6e227cb5092a969,libuuid-070451b5b568cdf1,libgetrandom-d27444c0c3d68ece,libbrotli-330442b4e810d9e2,libbrotli_decompressor-148425228c06af15,liballoc_stdlib-2827e2ad210ecf33,liballoc_no_stdlib-de586180d27642fb,liburlpattern-0037897ca0bf7c28,libunic_ucd_ident-189d02a336b27d88,libunic_ucd_version-bce61bd34f9d6dfc,libunic_common-8f19db072be4493b,libunic_char_property-3e3844a773f2821b,libunic_char_range-df2b800d2c20d572,libglob-653fb6034273547f,libwalkdir-ba312ba328ef4429,libsame_file-8ea53ca0858bde96,libwinapi_util-1cab9f3b6fb829d8,libjson_patch-cd0eba2feb8137f7,libthiserror-9b2027c8d44dc860,libjsonptr-5b28e3d61981eff9,libserde_with-510e24fbe6f4b6b6,libphf-061596f965e71bde,libphf_shared-48ebec4d1339f2d4,libsiphasher-f2cb24b4b4592255,libtoml-fab7330326f6ab58,libtoml_writer-f7ba22f15ca05e32,libtoml_parser-8ab87410cc5a14dd,libwinnow-25f4e4b056641412,libserde_spanned-d90db61256c42770,libtoml_datetime-a379cd95d6f8e137,libserde_untagged-27843142ab107f2b,liberased_serde-d73dc40422a4a04e,libtypeid-45d0059fe9180546,libanyhow-2dad6eeef2c2ffa6,libsemver-72dfee95efed128d,libtokenizers-43ad69845fa957ce,libesaxx_rs-626d5f949359ed5b,libregex-820f9990ac1c3092,libregex_automata-8a321e8677e27918,libaho_corasick-de9c678ea61a7855,libregex_syntax-9764c53ec44ac328,libunicode_normalization_alignments-8e0baaabbb203e41,libspm_precompiled-d5d5d064ce457ad7,libbase64-6bb5c4dec82cb29f,libunicode_segmentation-9bd745c6aec357d3,libnom-b7dccbe9a498f4f4,libunicode_categories-2ed65353bdacd76e,librand-660ecf9aa10a6765,librand_chacha-9b55e6ff7029d926,libppv_lite86-eda9252f9405b06b,librand_core-3c65dfd7fd884ce8,libdary_heap-76c75fc57b2e340c,libcompact_str-070d5692a4276003,libstatic_assertions-28916bdb160e2738,libcastaway-ac40a5e7c5055528,libmonostate-0397f2e13dc40c2c,libmacro_rules_attribute-a17921ec42271d25,libindicatif-43a194448834215d,libportable_atomic-64a58c5849207094,libunit_prefix-601972ebce321435,libconsole-06b1fe4d8e15583f,libencode_unicode-d826b076673e80a1,libunicode_width-41a39aac623a3636,librayon_cond-5824c6c27c8218ee,libitertools-b55e6967ef0e1c06,librayon-bd25c1caba1752a7,librayon_core-2ba434b3c71450ff,libcrossbeam_deque-15a9ba6c6bf8f9b8,libcrossbeam_epoch-e7646995e7afdeb8,libcrossbeam_utils-bee4830fd8795c94,libeither-95b8108f1b404313,libonig-dd8ccaed1c78c717,libonig_sys-023ab70c72d2bb54,libahash-2644a0c931ae8f59,libgetrandom-b23dc910db2b89eb,libzerocopy-c2959b3e4c99d040,libderive_builder-b57ba616ce6f748f,libort-ed91f4371adfa893,libort_sys-6f6cee6827a8fe58,libndarray-69f3e62e66f0c964,libmatrixmultiply-291521e017783c39,libnum_complex-11fb141702a76d70,libnum_integer-55783c0fc20d9991,libnum_traits-606daed704563d67,librawpointer-a3c79a630fa045f2,libbollard-2a64b72f49b12bdf,libserde_urlencoded-29fb6a2d204950d3,libryu-7a979f06163ede37,libthiserror-043984079c2194e9,libbollard_stubs-0aaa852d7edc21ea,libhyper_named_pipe-f00eaddc268bbebc,libwinapi-5b0ea245cbd7fb82,libhex-88e6ff3aefa7a75b,libreqwest-ec8319a544f538e5,librustls_platform_verifier-d2b6fa0ea84759bf,libhyper_rustls-aa3ec79ee07c1c19,libtokio_rustls-b49ea59115c2b4ac,librustls-98431c0b46c72e6a,libsubtle-a167f0cf37fa232b,libwebpki-56bfc2682f22613d,libuntrusted-1cd1c0a778daec98,libaws_lc_rs-8835bc6aeb12aa0e,libaws_lc_sys-127925f735e1b459,librustls_pki_types-5d1a2bbddfe200e2,libzeroize-fd38fa47138c85d9,libmime-c5d966cf93b42f57,libencoding_rs-11752058c15ad3c0,libserde_json-0f16997fa2700443,libzmij-c41451be012e8b88,libtower_http-713fd846d627214c,libbitflags-bfbb3fe5043dfde1,libiri_string-4944c7e71cc704b0,libtower-7a2de25c12ad6a8c,libtower_layer-79b05e4cb8ad45fd,libhyper_util-c3bfb70f223fb4fa,libwindows_registry-dfed5ad5242bd1b5,libwindows_strings-55b18f99a037f78e,libwindows_result-3fe5e8885dbf9608,libbase64-e0324648afd55a30,libipnet-39bb659a91c67e2c,libtower_service-f33e741fdb9a23a1,libhyper-6741044bbd609bdc,libwant-3e5f318aa514f436,libtry_lock-1cc7e3cea1bdacbc,libhttparse-94476d6aecc1a62d,libh2-343b5a2ad4e2cb09,libtracing-a15f5f0a4a0d5089,libtracing_core-5934037f9fae1cfa,libonce_cell-5f6ed6fb319aa083,libindexmap-1c395b2c05cdacff,libequivalent-182d05e5bf37167b,libhashbrown-88dce5cae59f683e,libfnv-e6dff0ba3ff76c22,libtokio_util-13863c08f8e25d88,libpin_utils-ab2a7f25dea87840,libatomic_waker-17c57d0b12e90d73,libfutures_channel-decc000e0fbbaf41,libtokio-0331e64171162b2a,libsocket2-04bbd3d3ea38389c,libwindows_sys-7684bcba1970a30f,libwindows_targets-caf99b9d86d3fd44,libmio-bb5c6158f09fd03d,libwindows_sys-943313403e928961,libparking_lot-58eaec6a68371b9c,libparking_lot_core-a2f53b17ce9cf6aa,libwindows_link-2802d900d5c74c46,libcfg_if-ba2f7587fe48a3f5,liblock_api-5803abf3217577b7,libscopeguard-d91086ffe30634f5,libhttp_body_util-1b975d570f6c6d3c,libhttp_body-638dde1188ffc798,libfutures_util-59dc3bf2e43faf25,libmemchr-06656d2859aef5b8,libfutures_io-aab5e3a30e319c96,libslab-3835b225a1c53bdd,libpin_project_lite-b130efc05134ca41,libfutures_sink-6cc43636ba8187bc,libfutures_task-683c212e1cd25373,liburl-33ea733dcc2b3072,libidna-b507a96d708b6517,libutf8_iter-b9ced8892ec273cc,libidna_adapter-263e9f73e8fe7479,libicu_properties-7c961a00271f92a1,libicu_properties_data-40d48e386b84ec9d,libicu_normalizer-1b9fbd765621eb13,libsmallvec-c4892ceb650843c2,libicu_normalizer_data-3ea0bab93d6118f1,libicu_collections-c975a3b78d00aab5,libpotential_utf-f17fb6bb8dfcae91,libicu_provider-d136ec6194120480,libicu_locale_core-93d9b747d1ecee22,libtinystr-91814d51d0324d6d,liblitemap-689f16b1861d4fda,libwriteable-8c22866d684e61f7,libzerovec-212816a9d9b1d5a9,libzerotrie-d76e6da7d209c39f,libyoke-88f71aa21e795a7c,libstable_deref_trait-0b08d47bfb86a2c0,libzerofrom-746dcb8c8db8e320,libform_urlencoded-890c0fe9ede3aa7e,libpercent_encoding-a9b33e3a1848d9a2,libhttp-d87a4701ee701df4,libitoa-4c3b3fd547f3b04c,libbytes-b89eab60a852e91b,libsync_wrapper-e519c30fbd508d3f,libfutures_core-3b5e4ab3558f322e,libkeyring-b8f34980fa03be52,liblog-bc27f9e9e9156e52,libserde-94cbfbfbd0bbd8b1,libserde_core-e9283323b4021326}.rlib" "<sysroot>\\lib\\rustlib\\x86_64-pc-windows-msvc\\lib/{libstd-*,libpanic_unwind-*,libcfg_if-*,libwindows_targets-*,librustc_demangle-*,libstd_detect-*,libhashbrown-*,librustc_std_workspace_alloc-*,libunwind-*,librustc_std_workspace_core-*,liballoc-*,libcore-*,libcompiler_builtins-*}.rlib" "shell32.lib" "ole32.lib" "C:\\Users\\IK\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\windows_x86_64_msvc-0.52.6\\lib\\windows.0.52.0.lib" "advapi32.lib" "dxguid.lib" "DXCORE.lib" "DXGI.lib" "D3D12.lib" "DirectML.lib" "kernel32.lib" "C:\\Users\\IK\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\windows_x86_64_msvc-0.53.1\\lib\\windows.0.53.0.lib" "kernel32.lib" "kernel32.lib" "kernel32.lib" "ntdll.lib" "userenv.lib" "ws2_32.lib" "dbghelp.lib" "/defaultlib:msvcrt" "/NXCOMPAT" "/LIBPATH:D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\build\\tauri-app-f4665ae41a03032e\\out" "/LIBPATH:D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\build\\aws-lc-sys-48593561b0b1046b\\out" "/LIBPATH:D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\build\\libsqlite3-sys-976c608e48f056df\\out" "/LIBPATH:D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\build\\webview2-com-sys-56eaba9b1f9a4db8\\out\\x64" "/LIBPATH:D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\build\\esaxx-rs-e736e229e970aaf3\\out" "/LIBPATH:D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\build\\onig_sys-69bf0a85297cd702\\out" "/LIBPATH:C:\\Users\\IK\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\windows_x86_64_msvc-0.53.1\\lib" "/LIBPATH:C:\\Users\\IK\\AppData\\Local\\ort.pyke.io\\dfbin\\x86_64-pc-windows-msvc\\a03948a02dec0c38485febb0e54ccb89af070d3adcbcb91e2e4fa5fec278943a" "/LIBPATH:C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.50.35717\\atlmfc\\lib\\x64" "/LIBPATH:C:\\Users\\IK\\.cargo\\registry\\src\\index.crates.io-1949cf8c6b5b557f\\windows_x86_64_msvc-0.52.6\\lib" "/OUT:D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\deps\\tauri_app_lib.dll" "/OPT:REF,ICF" "/DLL" "/IMPLIB:D:\\WindowsProyects\\Antigravity\\Fork\\src-tauri\\target\\release\\deps\\tauri_app_lib.dll.lib" "/DEBUG" "/PDBALTPATH:%_PDB%" "/NATVIS:<sysroot>\\lib\\rustlib\\etc\\intrinsic.natvis" "/NATVIS:<sysroot>\\lib\\rustlib\\etc\\liballoc.natvis" "/NATVIS:<sysroot>\\lib\\rustlib\\etc\\libcore.natvis" "/NATVIS:<sysroot>\\lib\\rustlib\\etc\\libstd.natvis" "/NATVIS:C:\\Users\\IK\\AppData\\Local\\Temp\\rustcdxEM7u\\tauri_app_lib-0.natvis" "/NATVIS:C:\\Users\\IK\\AppData\\Local\\Temp\\rustcdxEM7u\\tauri_app_lib-1.natvis" "/NATVIS:C:\\Users\\IK\\AppData\\Local\\Temp\\rustcdxEM7u\\tauri_app_lib-2.natvis" "/NODEFAULTLIB:libvcruntimed.lib" "/NODEFAULTLIB:vcruntime.lib" "/NODEFAULTLIB:vcruntimed.lib" "/NODEFAULTLIB:libcmtd.lib" "/NODEFAULTLIB:msvcrt.lib" "/NODEFAULTLIB:msvcrtd.lib" "/NODEFAULTLIB:libucrt.lib" "/NODEFAULTLIB:libucrtd.lib" "/DEFAULTLIB:libcmt.lib" "/DEFAULTLIB:libvcruntime.lib" "/DEFAULTLIB:ucrt.lib"
+  = note: some arguments are omitted. use `--verbose` to show all linker arguments
+  = note:    Creando biblioteca D:\WindowsProyects\Antigravity\Fork\src-tauri\target\release\deps\tauri_app_lib.dll.lib y objeto D:\WindowsProyects\Antigravity\Fork\src-tauri\target\release\deps\tauri_app_lib.dll.expΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(5e7b0e08b07b6019-bcm.o) : error LNK2019: s├¡mbolo externo __builtin_bswap32 sin resolver al que se hace referencia en la funci├│n AWS_LC_TRAMPOLINE_MD5_Init_from_stateΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(aa3883b9c76e19d7-cbs.o) : error LNK2001: s├¡mbolo externo __builtin_bswap32 sin resolverΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(aa3883b9c76e19d7-cbb.o) : error LNK2001: s├¡mbolo externo __builtin_bswap32 sin resolverΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(1a8cd16084f4713d-ripemd.o) : error LNK2001: s├¡mbolo externo __builtin_bswap32 sin resolverΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(5e7b0e08b07b6019-bcm.o) : error LNK2019: s├¡mbolo externo __builtin_bswap64 sin resolver al que se hace referencia en la funci├│n CRYPTO_bswap8ΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(aa3883b9c76e19d7-cbs.o) : error LNK2001: s├¡mbolo externo __builtin_bswap64 sin resolverΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(aa3883b9c76e19d7-cbb.o) : error LNK2001: s├¡mbolo externo __builtin_bswap64 sin resolverΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(aa3883b9c76e19d7-cbs.o) : error LNK2019: s├¡mbolo externo __builtin_bswap16 sin resolver al que se hace referencia en la funci├│n CRYPTO_bswap2ΓÉì
+          libaws_lc_sys-127925f735e1b459.rlib(aa3883b9c76e19d7-cbb.o) : error LNK2001: s├¡mbolo externo __builtin_bswap16 sin resolverΓÉì
+          D:\WindowsProyects\Antigravity\Fork\src-tauri\target\release\deps\tauri_app_lib.dll : fatal error LNK1120: 3 externos sin resolverΓÉì
+          
+
+warning: `tauri-app` (lib) generated 7 warnings
+error: could not compile `tauri-app` (lib) due to 1 previous error; 7 warnings emitted
+failed to build app: failed to build app
+       Error failed to build app: failed to build app

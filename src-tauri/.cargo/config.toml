@@ -1,3 +1,14 @@
+# HINT (English): This configuration forces the MSVC linker to use the specific Runtime Library (DLL version).
+# PISTA (Español): Esta configuración fuerza al enlazador MSVC a usar la Biblioteca en Tiempo de Ejecución específica (versión DLL).
+#
+# CONTEXT: The `esaxx-rs` crate (via `tokenizers`) links statically by default (MT).
+# Our project and `ort` (ONNX Runtime) require dynamic linking (MD).
+# This mismatch causes linker errors (LNK2019/LNK2001). We force `/MD` here to align everything.
+#
+# CONTEXTO: El crate `esaxx-rs` (vía `tokenizers`) se enlaza estáticamente por defecto (MT).
+# Nuestro proyecto y `ort` (ONNX Runtime) requieren enlace dinámico (MD).
+# Esta discrepancia causa errores de enlace. Forzamos `/MD` aquí para alinear todo.
+
 [target.x86_64-pc-windows-msvc]
 rustflags = ["-C", "target-feature=-crt-static"]
 

@@ -8,8 +8,16 @@ use std::sync::{Arc, Mutex};
 use tauri::{State, Manager};
 
 struct AppState {
+    // HINT/PISTA: `Orchestrator` manages the Node.js sidecar process. It uses a Mutex for interior mutability.
+    // `Orchestrator` gestiona el proceso sidecar de Node.js. Usa Mutex para mutabilidad interior.
     orchestrator: Mutex<Orchestrator>,
-    db: Arc<Database>, // Database is thread-safe thanks to SqlitePool
+    
+    // HINT/PISTA: `Database` (via SqlitePool) is internally thread-safe, so Arc is enough.
+    // `Database` (vía SqlitePool) es internamente seguro para hilos, Arc es suficiente.
+    db: Arc<Database>, 
+    
+    // HINT/PISTA: `LocalInferenceEngine` (ORT) is heavy. We wrap it in Option to load it lazily.
+    // `LocalInferenceEngine` (ORT) es pesado. Lo envolvemos en Option para cargarlo perezosamente.
     local_llm: Mutex<Option<LocalInferenceEngine>>,
 }
 

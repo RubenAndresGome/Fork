@@ -32,14 +32,17 @@ impl SandboxManager {
         // Para robustez, idealmente: pull_image.
 
         // 2. Crear Contenedor
-        // 2. Crear Contenedor
+        // HINT/PISTA: We use `ContainerCreateBody` here instead of `ContainerConfig` because `bollard` 0.14+
+        // refined its types. This struct maps correctly to the Docker API JSON body.
+        // Usamos `ContainerCreateBody` aquí en lugar de `ContainerConfig` porque `bollard` 0.14+
+        // refinó sus tipos. Esta estructura se mapea correctamente al cuerpo JSON de la API de Docker.
         let config = ContainerCreateBody {
             image: Some(image.to_string()),
             cmd: Some(cmd.iter().map(|s| s.to_string()).collect()),
             host_config: Some(HostConfig {
-                network_mode: Some("none".to_string()), // Sin red
+                network_mode: Some("none".to_string()), // Sin red / Network isolation
                 memory: Some(128 * 1024 * 1024), // 128MB RAM Limit
-                // auto_remove: Some(true), // Auto-remove es arriesgado si queremos leer logs después de que acabe rápido
+                // auto_remove: Some(true), // Auto-remove is risky if we want logs / Es arriesgado si queremos logs
                 ..Default::default()
             }),
             ..Default::default()
